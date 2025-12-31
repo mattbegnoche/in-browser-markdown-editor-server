@@ -12,6 +12,8 @@ yarn.lock
 .env.development.local
 .env.test.local
 .env.production.local
+config.env
+*.env
 
 # MongoDB
 *.log
