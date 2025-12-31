@@ -1,5 +1,27 @@
 {
+  "name": "in-browser-markdown-editor-server",
+  "version": "1.0.0",
+  "description": "Learning node, express and mongoDB by practicing building a simple in-browser markdown editor with user authentication and cloud storage.",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js"
+  },
+  "author": "Matthew Begnoche",
+  "license": "ISC",
   "dependencies": {
-    "mongodb": "7.0"
+    "axios": "^1.13.2",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongodb": "7.0",
+    "mongoose": "^9.1.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.2",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.7.4"
   }
 }
