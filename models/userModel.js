@@ -48,29 +48,26 @@ const userSchema = new mongoose.Schema({
 });
 
 // Middleware to hash the password before saving the user document, if the password field was modified.
-userSchema.pre('save', async function (next) {
+userSchema.pre('save', async function () {
   // Return function if the password has not changed yet
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password')) return;
   // Hash the password
   this.password = await bcrypt.hash(this.password, 12);
   // Delete the passwordConfirm field for security reasons in the DB
   this.passwordConfirm = undefined;
-  next();
 });
 
 // Middleware to update passwordChangedAt field
-userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return next();
+userSchema.pre('save', function () {
+  if (!this.isModified('password') || this.isNew) return;
   // By subtracting 1 second, the passwordChangedAt timestamp is slightly earlier than the JWT's iat timestamp, ensuring that the token remains valid if issued immediately after the password update.
   this.passwordChangedAt = Date.now() - 1000;
-  next();
 });
 
 // Middleware to remove all inactive users from mongoose's queries (find, findOne, and findById).
-userSchema.pre(/^find/, function (next) {
+userSchema.pre(/^find/, function () {
   // this points to the current query
   this.find({ active: { $ne: false } });
-  next();
 });
 
 // This method is used to authenticate users by verifying their password during login or other secure operations.
