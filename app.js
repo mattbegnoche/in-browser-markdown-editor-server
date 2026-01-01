@@ -1,15 +1,25 @@
 // Add in the bare min to get the server running
 const path = require('path');
 const express = require('express');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
+const cookieParser = require('cookie-parser');
+
+const userRouter = require('./routes/userRouter');
+const markdownRouter = require('./routes/markdownRouter');
 
 const app = express();
 
+// Body parser, reading data from body into req.body
+app.use(express.json({ limit: '10kb' }));
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
+
+// Routes
+app.use('/api/v1/user', userRouter);
+
 module.exports = app;
 /*
-const path = require('path');
-const express = require('express');
-const morgan = require('morgan');
-const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
