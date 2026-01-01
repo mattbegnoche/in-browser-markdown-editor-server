@@ -52,8 +52,8 @@ app.use(cookieParser());
 app.use(compression());
 
 // Routes
-app.use('/api/v1/user', userRouter);
-// app.use('/api/v1/markdown', markdownRouter);
+app.use('/api/v1/users', userRouter);
+app.use('/api/v1/markdowns', markdownRouter);
 
 app.all('/*path', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

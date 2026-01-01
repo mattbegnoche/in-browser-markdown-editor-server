@@ -180,6 +180,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     const resetURL = `${req.protocol}://${req.get(
       'host',
     )}/api/v1/users/resetPassword/${resetToken}`;
+    // TODO: Create Email with templates
     await new Email(user, resetURL).sendPasswordReset();
 
     res.status(200).json({
