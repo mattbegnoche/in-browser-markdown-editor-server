@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const mongoose = require('mongoose');
 
 // Local modules
 const AppError = require('./utils/appError');
@@ -15,6 +16,22 @@ const globalErrorHandler = require('./controllers/errorController');
 // Route handlers
 const userRouter = require('./routes/userRouter');
 const markdownRouter = require('./routes/markdownRouter');
+
+// MongoDB Connection (for Vercel serverless)
+if (process.env.DATABASE && process.env.DB_PASSWORD) {
+  const DB = process.env.DATABASE.replace(
+    '<db_password>',
+    process.env.DB_PASSWORD,
+  );
+
+  mongoose
+    .connect(DB, {
+      serverSelectionTimeoutMS: 30000,
+      socketTimeoutMS: 45000,
+    })
+    .then(() => console.log('DB connection successful!'))
+    .catch((err) => console.error('MongoDB connection error:', err));
+}
 
 // Initialize express app
 const app = express();
