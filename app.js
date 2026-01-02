@@ -17,8 +17,9 @@ const globalErrorHandler = require('./controllers/errorController');
 const userRouter = require('./routes/userRouter');
 const markdownRouter = require('./routes/markdownRouter');
 
-// MongoDB Connection (for Vercel serverless)
-if (process.env.DATABASE && process.env.DB_PASSWORD) {
+// MongoDB Connection (for Vercel serverless only)
+// When running on Vercel, DATABASE env var exists but server.js isn't used
+if (process.env.VERCEL && process.env.DATABASE && process.env.DB_PASSWORD) {
   const DB = process.env.DATABASE.replace(
     '<db_password>',
     process.env.DB_PASSWORD,
