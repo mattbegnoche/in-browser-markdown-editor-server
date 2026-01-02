@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const { sendSimpleMessage } = require('../utils/mailgunEmail');
 // const Email = require('./../utils/email');
 
 const signToken = (id) => {
@@ -43,9 +44,13 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
   });
 
-  const url = `${req.protocol}://${req.get('host')}/me`;
+  const url = `${req.protocol}://${req.get('host')}`;
 
-  // await new Email(newUser, url).sendWelcome();
+  await sendSimpleMessage(
+    `Welcome to In Browser Markdown Editor`,
+    `Start your development at ${url}`,
+    newUser,
+  );
 
   createSendToken(newUser, 201, req, res);
 });
