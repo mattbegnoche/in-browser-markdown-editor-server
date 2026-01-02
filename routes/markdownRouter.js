@@ -14,7 +14,7 @@ router.route('/').get(markdownController.getAllMarkdown);
 router
   .route('/:id')
   .get(markdownController.getMarkdown)
-  .patch(markdownController.updateMarkdown);
-// .delete(markdownController.deleteMarkdown);
+  .patch(markdownController.updateMarkdown)
+  .delete(markdownController.deleteMarkdown);
 
 module.exports = router;

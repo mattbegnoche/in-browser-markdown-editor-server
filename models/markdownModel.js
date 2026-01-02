@@ -5,7 +5,6 @@ const markdownSchema = new mongoose.Schema({
   title: {
     type: String,
     required: [true, 'A markdown document must have a title'],
-    unique: [true, 'A markdown document title must be unique'],
     trime: true,
   },
   slug: {

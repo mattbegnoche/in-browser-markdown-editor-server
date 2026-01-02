@@ -63,5 +63,36 @@ exports.updateMarkdown = catchAsync(async (req, res, next) => {
     },
   });
 });
-// exports.createMarkdown = factory.createOne(Markdown);
-// exports.deleteMarkdown = factory.deleteOne(Markdown);
+exports.createMarkdown = catchAsync(async (req, res, next) => {
+  const doc = await Markdown.create({
+    title: req.body.title,
+    content: req.body.content,
+  });
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      data: doc,
+    },
+  });
+});
+
+exports.deleteMarkdown = catchAsync(async (req, res, next) => {
+  const doc = await Markdown.findOneAndDelete({
+    _id: req.params.id,
+    users: req.user.id,
+  });
+
+  if (!doc)
+    return next(
+      new AppError(
+        'No document found with that Id or you do not have access to update this document',
+        404,
+      ),
+    );
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
