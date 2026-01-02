@@ -33,7 +33,7 @@ markdownSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });
 });
 
-markdownSchema.pre(/^find/, function (next) {
+markdownSchema.pre(/^findOne/, function (next) {
   this.populate({
     path: 'users',
     select: '-__v, -passwordChangedAt',
