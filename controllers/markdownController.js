@@ -63,10 +63,12 @@ exports.updateMarkdown = catchAsync(async (req, res, next) => {
     },
   });
 });
+
 exports.createMarkdown = catchAsync(async (req, res, next) => {
   const doc = await Markdown.create({
     title: req.body.title,
     content: req.body.content,
+    users: [req.user.id],
   });
 
   res.status(201).json({

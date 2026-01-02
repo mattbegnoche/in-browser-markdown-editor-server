@@ -8,8 +8,10 @@ const router = express.Router();
 // Protect all routes from public
 router.use(authController.protect);
 
-router.route('/').get(markdownController.getAllMarkdown);
-// .post(markdownController.createMarkdown);
+router
+  .route('/')
+  .get(markdownController.getAllMarkdown)
+  .post(markdownController.createMarkdown);
 
 router
   .route('/:id')

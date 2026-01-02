@@ -15,7 +15,16 @@ const DB = process.env.DATABASE.replace(
   process.env.DB_PASSWORD,
 );
 
-mongoose.connect(DB).then(() => console.log('DB connection successful!'));
+// Optimized for serverless (Vercel)
+mongoose
+  .connect(DB, {
+    serverSelectionTimeoutMS: 30000, // Increase timeout for serverless cold starts
+    socketTimeoutMS: 45000,
+  })
+  .then(() => console.log('DB connection successful!'))
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+  });
 
 const port = process.env.PORT || 3000;
 
